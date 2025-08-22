@@ -21,12 +21,12 @@ body {
 
 /* Header */
 .header {
-  background-color: rgba(30, 41, 59, 0.5);
+  background-color: rgba(30, 41, 59, 0.95);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid #334155;
-  position: sticky;
-  top: 0;
-  z-index: 50;
+  position: relative; /* Cambiado de fixed a relative para comportamiento normal */
+  width: 100%;
+  z-index: 1000;
 }
 
 .header-content {
