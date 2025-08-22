@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estado de Clases - INSPT UTN</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-container">
+                        <img src="img/logo.png" alt="UTN INSPT Logo" class="logo">
+                    </div>
+                    <div class="title-section">
+                        <h1 class="main-title">Calendario Académico 2025 Online</h1>
+                        <p class="subtitle">UTN - INSPT • Av. Triunvirato 3174 (CABA)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- Estado de Clases Card -->
+            <div class="card class-status-card">
+                <div class="card-header">
+                    <h2 class="card-title">Estado de Clases INSPT-UTN</h2>
+                </div>
+                <div class="card-content">
+                    <div class="date-time-status">
+                        <div class="date-time">
+                            <div class="datetime-line">
+                                <div class="date-group">
+                                    <span class="date-icon">📅</span>
+                                    <span class="current-date">Cargando fecha...</span>
+                                </div>
+                                <div class="time-group">
+                                    <span class="time-icon">⏰</span>
+                                    <span class="current-time">Cargando hora...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="status-display">
+                        <div class="status-badge loading">CARGANDO...</div>
+                        <div class="status-reason">
+                            <span class="reason-label">Motivo:</span>
+                            <span class="reason-text">Verificando calendario...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendario Académico Card -->
+            <div class="card calendar-card">
+                <div class="card-header">
+                    <h2 class="card-title">Próximos Eventos del Calendario</h2>
+                </div>
+                <div class="card-content">
+                    <div class="events-list">
+                        <!-- Los eventos se cargarán dinámicamente -->
+                        <div class="event-item">
+                            <div class="event-date">
+                                <span class="event-day">--</span>
+                                <span class="event-month">---</span>
+                            </div>
+                            <div class="event-details">
+                                <h3 class="event-title">Cargando eventos...</h3>
+                                <p class="event-description">Por favor espera</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>
+                    Desarrollado para estudiantes del INSPT-UTN • Calendario Académico 2025 •
+                    <span class="highlight">Disposición N° 699/2024</span>
+                </p>
+                <p class="footer-note">
+                    Este calendario no tiene en consideración paros docentes o generales.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Added JavaScript modules -->
+    <script src="js/calendar-data.js"></script>
+    <script src="js/class-status.js"></script>
+</body>
+</html>
