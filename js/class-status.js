@@ -12,6 +12,7 @@ class ClassStatusManager {
 
         this.updateDateTime()
         this.updateClassStatus()
+        this.updateTomorrowClassStatus()
         this.updateUpcomingEvents()
 
         // Actualizar cada segundo
@@ -22,6 +23,7 @@ class ClassStatusManager {
         // Actualizar estado de clases cada minuto
         setInterval(() => {
             this.updateClassStatus()
+            this.updateTomorrowClassStatus()
         }, 60000)
     }
 
@@ -45,7 +47,7 @@ class ClassStatusManager {
         }
         const formattedTime = now.toLocaleTimeString("es-ES", timeOptions)
 
-        // Actualizar DOM
+        // Actualizar DOM para hoy
         const dateElement = document.querySelector(".current-date")
         const timeElement = document.querySelector(".current-time")
 
@@ -55,6 +57,17 @@ class ClassStatusManager {
 
         if (timeElement) {
             timeElement.textContent = formattedTime
+        }
+
+        // Formatear fecha de mañana
+        const tomorrow = new Date(now)
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        const tomorrowFormattedDate = tomorrow.toLocaleDateString("es-ES", dateOptions)
+
+        // Actualizar DOM para mañana
+        const tomorrowDateElement = document.querySelector(".tomorrow-date-text")
+        if (tomorrowDateElement) {
+            tomorrowDateElement.textContent = this.capitalizeFirst(tomorrowFormattedDate)
         }
     }
 
@@ -102,6 +115,54 @@ class ClassStatusManager {
         }
 
         this.updateStatusDisplay(hasClasses, reason)
+    }
+
+    updateTomorrowClassStatus() {
+        const today = new Date() // Cambiar this.currentDate por new Date()
+        const tomorrow = new Date(today)
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        const tomorrowStr = this.formatDate(tomorrow)
+        const dayOfWeek = tomorrow.getDay() // 0 = domingo, 6 = sábado
+
+        let hasClasses = false
+        let reason = ""
+
+        if (!window.academicCalendar2025) {
+            reason = "Error: No se pudieron cargar los datos del calendario"
+            this.updateTomorrowStatusDisplay(false, reason)
+            return
+        }
+
+        // Verificar si es fin de semana
+        if (dayOfWeek === 0 || dayOfWeek === 6) {
+            hasClasses = false
+            reason = dayOfWeek === 0 ? "Domingo" : "Sábado"
+        }
+        // Verificar períodos sin clases
+        else if (this.isInNoClassPeriod(tomorrowStr)) {
+            hasClasses = false
+            reason = this.getNoClassReason(tomorrowStr)
+        }
+        // Verificar feriados
+        else if (this.isHoliday(tomorrowStr)) {
+            hasClasses = false
+            reason = this.getHolidayName(tomorrowStr)
+        }
+        // Verificar períodos de exámenes
+        else if (this.isExamPeriod(tomorrowStr)) {
+            hasClasses = false
+            reason = `Período de Exámenes - ${this.getExamPeriodName(tomorrowStr)}`
+        }
+        // Verificar si está en período académico
+        else if (this.isInAcademicPeriod(tomorrowStr)) {
+            hasClasses = true
+            reason = this.getAcademicPeriodName(tomorrowStr)
+        } else {
+            hasClasses = false
+            reason = "Fuera del período académico"
+        }
+
+        this.updateTomorrowStatusDisplay(hasClasses, reason)
     }
 
     isInNoClassPeriod(dateStr) {
@@ -165,6 +226,26 @@ class ClassStatusManager {
 
         if (reasonText) {
             reasonText.textContent = reason
+        }
+    }
+
+    updateTomorrowStatusDisplay(hasClasses, reason) {
+        const tomorrowStatusBadge = document.querySelector(".tomorrow-status-badge")
+        const tomorrowReasonText = document.querySelector(".tomorrow-reason-text")
+
+        if (tomorrowStatusBadge) {
+            tomorrowStatusBadge.className = "tomorrow-status-badge"
+            if (hasClasses) {
+                tomorrowStatusBadge.classList.add("has-classes")
+                tomorrowStatusBadge.textContent = "HAY CLASES MAÑANA"
+            } else {
+                tomorrowStatusBadge.classList.add("no-classes")
+                tomorrowStatusBadge.textContent = "NO HAY CLASES MAÑANA"
+            }
+        }
+
+        if (tomorrowReasonText) {
+            tomorrowReasonText.textContent = reason
         }
     }
 
