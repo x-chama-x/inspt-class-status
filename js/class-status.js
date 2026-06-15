@@ -5,7 +5,7 @@ class ClassStatusManager {
     }
 
     init() {
-        if (typeof window.academicCalendar2025 === "undefined") {
+        if (typeof window.academicCalendar2026 === "undefined") {
             setTimeout(() => this.init(), 100)
             return
         }
@@ -79,7 +79,7 @@ class ClassStatusManager {
         let hasClasses = false
         let reason = ""
 
-        if (!window.academicCalendar2025) {
+        if (!window.academicCalendar2026) {
             reason = "Error: No se pudieron cargar los datos del calendario"
             this.updateStatusDisplay(false, reason)
             return
@@ -127,7 +127,7 @@ class ClassStatusManager {
         let hasClasses = false
         let reason = ""
 
-        if (!window.academicCalendar2025) {
+        if (!window.academicCalendar2026) {
             reason = "Error: No se pudieron cargar los datos del calendario"
             this.updateTomorrowStatusDisplay(false, reason)
             return
@@ -166,44 +166,44 @@ class ClassStatusManager {
     }
 
     isInNoClassPeriod(dateStr) {
-        return window.academicCalendar2025.noClassPeriods.some((period) => dateStr >= period.start && dateStr <= period.end)
+        return window.academicCalendar2026.noClassPeriods.some((period) => dateStr >= period.start && dateStr <= period.end)
     }
 
     getNoClassReason(dateStr) {
-        const period = window.academicCalendar2025.noClassPeriods.find(
+        const period = window.academicCalendar2026.noClassPeriods.find(
             (period) => dateStr >= period.start && dateStr <= period.end,
         )
         return period ? period.name : "Sin clases"
     }
 
     isHoliday(dateStr) {
-        return window.academicCalendar2025.holidays.some((holiday) => holiday.date === dateStr)
+        return window.academicCalendar2026.holidays.some((holiday) => holiday.date === dateStr)
     }
 
     getHolidayName(dateStr) {
-        const holiday = window.academicCalendar2025.holidays.find((holiday) => holiday.date === dateStr)
+        const holiday = window.academicCalendar2026.holidays.find((holiday) => holiday.date === dateStr)
         return holiday ? holiday.name : "Feriado"
     }
 
     isExamPeriod(dateStr) {
-        return window.academicCalendar2025.examPeriods.some((period) => dateStr >= period.start && dateStr <= period.end)
+        return window.academicCalendar2026.examPeriods.some((period) => dateStr >= period.start && dateStr <= period.end)
     }
 
     getExamPeriodName(dateStr) {
-        const period = window.academicCalendar2025.examPeriods.find(
+        const period = window.academicCalendar2026.examPeriods.find(
             (period) => dateStr >= period.start && dateStr <= period.end,
         )
         return period ? period.name : "Exámenes"
     }
 
     isInAcademicPeriod(dateStr) {
-        return window.academicCalendar2025.academicPeriods.some(
+        return window.academicCalendar2026.academicPeriods.some(
             (period) => dateStr >= period.start && dateStr <= period.end,
         )
     }
 
     getAcademicPeriodName(dateStr) {
-        const period = window.academicCalendar2025.academicPeriods.find(
+        const period = window.academicCalendar2026.academicPeriods.find(
             (period) => dateStr >= period.start && dateStr <= period.end,
         )
         return period ? period.name : ""
@@ -290,8 +290,8 @@ class ClassStatusManager {
     getUpcomingEvents(fromDate, limit = 5) {
         const fromDateStr = this.formatDate(fromDate)
         const allEvents = [
-            ...window.academicCalendar2025.importantEvents,
-            ...window.academicCalendar2025.holidays.map((h) => ({
+            ...window.academicCalendar2026.importantEvents,
+            ...window.academicCalendar2026.holidays.map((h) => ({
                 date: h.date,
                 name: h.name,
                 description: "Feriado",
